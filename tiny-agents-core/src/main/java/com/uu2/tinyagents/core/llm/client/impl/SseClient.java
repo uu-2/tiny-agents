@@ -1,0 +1,106 @@
+
+package com.uu2.tinyagents.core.llm.client.impl;
+
+import com.uu2.tinyagents.core.llm.client.LlmClient;
+import com.uu2.tinyagents.core.llm.client.LlmClientListener;
+import com.uu2.tinyagents.core.llm.LlmConfig;
+import com.uu2.tinyagents.core.llm.client.OkHttpClientUtil;
+import okhttp3.*;
+import okhttp3.sse.EventSource;
+import okhttp3.sse.EventSourceListener;
+import okhttp3.sse.EventSources;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+
+public class SseClient extends EventSourceListener implements LlmClient {
+
+    private OkHttpClient okHttpClient;
+    private EventSource eventSource;
+    private LlmClientListener listener;
+    private LlmConfig config;
+    private boolean isStop = false;
+
+    @Override
+    public void start(String url, Map<String, String> headers, String payload, LlmClientListener listener, LlmConfig config) {
+        this.listener = listener;
+        this.config = config;
+        this.isStop = false;
+
+        Request.Builder builder = new Request.Builder()
+            .url(url);
+
+        if (headers != null && !headers.isEmpty()) {
+            headers.forEach(builder::addHeader);
+        }
+
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(payload, mediaType);
+        Request request = builder.post(body).build();
+
+
+        this.okHttpClient = OkHttpClientUtil.buildDefaultClient();
+
+        EventSource.Factory factory = EventSources.createFactory(this.okHttpClient);
+        this.eventSource = factory.newEventSource(request, this);
+
+        if (this.config.isDebug()) {
+            System.out.println(">>>>send payload:" + payload);
+        }
+
+        this.listener.onStart(this);
+    }
+
+    @Override
+    public void stop() {
+        tryToStop();
+    }
+
+
+    @Override
+    public void onClosed(@NotNull EventSource eventSource) {
+        tryToStop();
+    }
+
+    @Override
+    public void onEvent(@NotNull EventSource eventSource, @Nullable String id, @Nullable String type, @NotNull String data) {
+        if (this.config.isDebug()) {
+            System.out.println(">>>>receive payload:" + data);
+        }
+        this.listener.onMessage(this, data);
+    }
+
+    @Override
+    public void onFailure(@NotNull EventSource eventSource, @Nullable Throwable t, @Nullable Response response) {
+        try {
+            this.listener.onFailure(this, Util.getFailureThrowable(t, response));
+        } finally {
+            tryToStop();
+        }
+    }
+
+    @Override
+    public void onOpen(@NotNull EventSource eventSource, @NotNull Response response) {
+        //super.onOpen(eventSource, response);
+    }
+
+
+    private boolean tryToStop() {
+        if (!this.isStop) {
+            try {
+                this.isStop = true;
+                this.listener.onStop(this);
+            } finally {
+                if (eventSource != null) {
+                    eventSource.cancel();
+                }
+                if (okHttpClient != null) {
+                    okHttpClient.dispatcher().executorService().shutdown();
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+}
