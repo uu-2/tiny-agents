@@ -48,7 +48,7 @@ public class JavaNativeFunction extends Function {
         parameter.setType(methodParameter.getType().getSimpleName().toLowerCase());
         parameter.setTypeClass(methodParameter.getType());
         parameter.setRequired(functionParam.required());
-        parameter.setEnums(functionParam.enums());
+        parameter.setEnums(functionParam.enums().length > 0 ? functionParam.enums() : null);
         return parameter;
     }
 

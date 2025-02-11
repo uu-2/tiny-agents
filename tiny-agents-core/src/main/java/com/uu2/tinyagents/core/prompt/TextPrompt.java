@@ -3,6 +3,7 @@ package com.uu2.tinyagents.core.prompt;
 import com.uu2.tinyagents.core.message.HumanMessage;
 import com.uu2.tinyagents.core.message.Message;
 import com.uu2.tinyagents.core.message.SystemMessage;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Setter
+@Getter
 public class TextPrompt extends Prompt{
     private SystemMessage systemMessage;
     protected HumanMessage humanMessage;
@@ -32,9 +34,9 @@ public class TextPrompt extends Prompt{
 
     @Override
     public List<Message> messages() {
-        if (systemMessage != null) {
+        if (getSystemMessage() != null) {
             ArrayList<Message> messages = new ArrayList<>();
-            messages.add(systemMessage);
+            messages.add(getSystemMessage());
             messages.add(humanMessage);
             return messages;
         }

@@ -25,8 +25,8 @@ public class ToolCallsMessage extends Message {
     @JSONField(name = "tool_calls")
     private final List<AiFunctionCall> toolCalls;
 
-    public ToolCallsMessage(List<AiFunctionCall> calls) {
-        super(Role.ASSISTANT.getRole(), null);
+    public ToolCallsMessage(Object content, List<AiFunctionCall> calls) {
+        super(Role.ASSISTANT.getRole(), content);
         this.toolCalls = calls;
     }
 

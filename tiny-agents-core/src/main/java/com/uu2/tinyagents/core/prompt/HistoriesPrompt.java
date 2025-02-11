@@ -1,12 +1,59 @@
 package com.uu2.tinyagents.core.prompt;
 
+import com.uu2.tinyagents.core.memory.ChatMemory;
+import com.uu2.tinyagents.core.memory.DefaultChatMemory;
+import com.uu2.tinyagents.core.message.AiMessage;
 import com.uu2.tinyagents.core.message.Message;
+import com.uu2.tinyagents.core.message.SystemMessage;
+import com.uu2.tinyagents.core.util.ArrayUtil;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class HistoriesPrompt extends Prompt{
+@Setter
+@Getter
+public class HistoriesPrompt extends FunctionPrompt {
+    private ChatMemory memory = new DefaultChatMemory();
+
+    private SystemMessage systemMessage;
+
+    private int maxAttachedMessageCount = 10;
+
+    public HistoriesPrompt(ChatMemory memory) {
+        super(null);
+        this.memory = memory;
+    }
+
     @Override
     public List<Message> messages() {
-        return List.of();
+        List<Message> messageList = memory.getMessages();
+        if (messageList == null) messageList = new ArrayList<>();
+
+        if (messageList.size() > maxAttachedMessageCount) {
+            messageList = messageList.subList(messageList.size() - maxAttachedMessageCount, messageList.size());
+        }
+
+        List<Message> result = new LinkedList<>();
+
+        if (systemMessage != null) {
+            result.add(systemMessage);
+        }
+        if (!messageList.isEmpty()) {
+            result.addAll(messageList);
+        }
+
+        return result;
+    }
+
+    public void processAssistantMessage(AiMessage lastAiMessage) {
+        super.processAssistantMessage(lastAiMessage);
+        memory.addMessage(lastAiMessage);
+    }
+
+    public void addMessage(Message message) {
+        memory.addMessage(message);
     }
 }

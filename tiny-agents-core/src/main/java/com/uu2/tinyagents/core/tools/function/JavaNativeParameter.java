@@ -10,4 +10,7 @@ public class JavaNativeParameter extends Parameter {
 
     protected Class<?> typeClass;
 
+    JavaNativeParameter() {
+        super();
+    }
 }

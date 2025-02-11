@@ -2,6 +2,7 @@ package com.uu2.tinyagents.core.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,6 +16,11 @@ public class Message implements Serializable {
     private String role;
     private Object content;
 
+    public Message prompt() {
+        return this;
+    }
+
+    @Getter
     public enum Role {
         SYSTEM("system"),
         USER("user"),
@@ -28,8 +34,5 @@ public class Message implements Serializable {
             this.role = role;
         }
 
-        public String getRole() {
-            return role;
-        }
     }
 }

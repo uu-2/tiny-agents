@@ -19,7 +19,7 @@ public class DefaultPromptFormat implements PromptFormat {
             return null;
         }
 
-        return messages;
+        return messages.stream().map(Message::prompt).toList();
     }
 
 
