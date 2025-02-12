@@ -71,7 +71,7 @@ public class ToolExecContext {
             toolExecResults.put(fc.getName(), execRes);
             execMessages.add(new ToolExecMessage(fc.getCallId(), execRes));
         }
-        prompt.getFullMessage().addAll(execMessages);
+        prompt.addMessage(execMessages);
     }
 
     private String functionArgsCompute(AiFunctionCall fc) {

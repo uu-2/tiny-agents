@@ -7,4 +7,5 @@ public interface Memory extends Serializable {
 
     Object id();
 
+    void clear();
 }

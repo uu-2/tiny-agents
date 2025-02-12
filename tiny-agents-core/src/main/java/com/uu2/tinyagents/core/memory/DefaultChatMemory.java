@@ -26,6 +26,11 @@ public class DefaultChatMemory implements ChatMemory {
     }
 
     @Override
+    public void clear() {
+        messages.clear();
+    }
+
+    @Override
     public List<Message> getMessages() {
         return messages;
     }

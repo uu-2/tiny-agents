@@ -24,9 +24,7 @@ import java.util.Map;
 public class OllamaLlmUtil {
 
 
-    private static final PromptFormat promptFormat = new DefaultPromptFormat() {
-
-    };
+    private static final PromptFormat promptFormat = new DefaultPromptFormat();
 
 
     public static AiMessageParser getAiMessageParser() {

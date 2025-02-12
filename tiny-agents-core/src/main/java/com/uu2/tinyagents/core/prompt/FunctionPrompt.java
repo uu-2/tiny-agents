@@ -1,26 +1,31 @@
 package com.uu2.tinyagents.core.prompt;
 
+import com.uu2.tinyagents.core.memory.ChatMemory;
+import com.uu2.tinyagents.core.memory.DefaultChatMemory;
 import com.uu2.tinyagents.core.message.AiMessage;
+import com.uu2.tinyagents.core.message.HumanMessage;
 import com.uu2.tinyagents.core.message.SystemMessage;
-import com.uu2.tinyagents.core.message.Message;
-import com.uu2.tinyagents.core.tools.ToolExecContext;
 import com.uu2.tinyagents.core.tools.function.Function;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 @Getter
-public class FunctionPrompt extends TextPrompt {
-    protected final List<Message> fullMessage;
+@Setter
+public class FunctionPrompt extends AttachmentPrompt {
     private boolean hasToolCalls = false;
     private Map<String, Object> toolExecResults = new HashMap<>();
 
     public FunctionPrompt(String content) {
-        super(content);
-        fullMessage = new LinkedList<>();
+        super(new DefaultChatMemory());
+        this.addMessage(HumanMessage.of(content));
+    }
+
+    public FunctionPrompt(ChatMemory memory) {
+        super(memory);
     }
 
     @Override
@@ -57,16 +62,8 @@ public class FunctionPrompt extends TextPrompt {
         this.addFunctions(functions);
     }
 
-    public List<Message> messages() {
-        if (fullMessage.isEmpty()) {
-            fullMessage.addAll(super.messages());
-        }
-        return fullMessage;
-    }
-
     public void processAssistantMessage(AiMessage lastAiMessage) {
         super.processAssistantMessage(lastAiMessage);
-        fullMessage.add(lastAiMessage);
 
         hasToolCalls = false;
         toolExecResults = new HashMap<>();

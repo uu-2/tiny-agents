@@ -1,24 +1,28 @@
 package com.uu2.tinyagents.core.prompt;
 
+import com.uu2.tinyagents.core.memory.ChatMemory;
+import com.uu2.tinyagents.core.memory.DefaultChatMemory;
 import com.uu2.tinyagents.core.message.AttachmentMessage;
-import com.uu2.tinyagents.core.message.Message;
-import com.uu2.tinyagents.core.message.SystemMessage;
 import lombok.Getter;
-import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-@Setter
 @Getter
-public class AttachmentPrompt extends Prompt {
+public class AttachmentPrompt extends HistoriesPrompt {
 
-    private SystemMessage systemMessage;
     AttachmentMessage attachmentMessage;
 
+    public AttachmentPrompt(ChatMemory memory) {
+        super(memory);
+    }
+
     public AttachmentPrompt(AttachmentMessage attachmentMessage) {
+        super(new DefaultChatMemory());
         this.attachmentMessage = attachmentMessage;
+        this.addMessage(attachmentMessage);
+    }
+
+    public void setAttachmentMessage(AttachmentMessage attachmentMessage) {
+        this.attachmentMessage = attachmentMessage;
+        this.addMessage(attachmentMessage);
     }
 
     public void addAttachments(AttachmentMessage.Attachment... attachments) {
@@ -30,14 +34,4 @@ public class AttachmentPrompt extends Prompt {
         }
     }
 
-    @Override
-    public List<Message> messages() {
-        if (getSystemMessage() != null) {
-            ArrayList<Message> messages = new ArrayList<>();
-            messages.add(getSystemMessage());
-            messages.add(attachmentMessage);
-            return messages;
-        }
-        return Collections.singletonList(attachmentMessage);
-    }
 }

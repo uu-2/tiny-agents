@@ -15,10 +15,8 @@ import java.util.List;
 
 @Setter
 @Getter
-public class HistoriesPrompt extends FunctionPrompt {
-    private ChatMemory memory = new DefaultChatMemory();
-
-    private SystemMessage systemMessage;
+public class HistoriesPrompt extends TextPrompt {
+    protected ChatMemory memory;
 
     private int maxAttachedMessageCount = 10;
 
@@ -38,8 +36,8 @@ public class HistoriesPrompt extends FunctionPrompt {
 
         List<Message> result = new LinkedList<>();
 
-        if (systemMessage != null) {
-            result.add(systemMessage);
+        if (getSystemMessage() != null) {
+            result.add(getSystemMessage());
         }
         if (!messageList.isEmpty()) {
             result.addAll(messageList);
@@ -53,7 +51,16 @@ public class HistoriesPrompt extends FunctionPrompt {
         memory.addMessage(lastAiMessage);
     }
 
+    public void addMessage(List<Message> execMessages) {
+        this.memory.addMessages(execMessages);
+    }
+
+
     public void addMessage(Message message) {
         memory.addMessage(message);
+    }
+
+    public void clearMemory() {
+        memory.clear();
     }
 }
