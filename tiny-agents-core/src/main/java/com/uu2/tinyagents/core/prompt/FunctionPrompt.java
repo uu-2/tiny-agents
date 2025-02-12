@@ -70,13 +70,6 @@ public class FunctionPrompt extends TextPrompt {
 
         hasToolCalls = false;
         toolExecResults = new HashMap<>();
-        if (lastAiMessage.getCalls() != null && !lastAiMessage.getCalls().isEmpty()) {
-            hasToolCalls = true;
-            Map<String, Function> funcMap = this.getFunctionMap();
-
-            // TODO 在多伦对话中，是否需要感知之前的函数调用情况。
-            List<Message> result = ToolExecContext.of(funcMap).execCalls(lastAiMessage.getCalls());
-            fullMessage.addAll(result);
-        }
+        hasToolCalls = (lastAiMessage.getCalls() != null && !lastAiMessage.getCalls().isEmpty());
     }
 }

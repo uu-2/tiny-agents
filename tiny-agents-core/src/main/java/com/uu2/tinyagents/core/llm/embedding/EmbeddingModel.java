@@ -4,13 +4,13 @@ package com.uu2.tinyagents.core.llm.embedding;
 
 public interface EmbeddingModel {
 
-//    default VectorData embed(Document document) {
-//        return embed(document, EmbeddingOptions.DEFAULT);
-//    }
-//
-//    VectorData embed(Document document, EmbeddingOptions options);
-//
-//    default int dimensions() {
-//        return embed(Document.of("dimensions")).getVector().length;
-//    }
+    default EmbedData embed(String... documents) {
+        return embed(EmbeddingOptions.DEFAULT, documents);
+    }
+
+    EmbedData embed(EmbeddingOptions options, String... documents);
+
+    default int dimensions() {
+        return embed("dimensions").getVector()[0].length;
+    }
 }

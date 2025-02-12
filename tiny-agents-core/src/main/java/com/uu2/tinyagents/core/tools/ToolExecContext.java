@@ -1,9 +1,13 @@
 package com.uu2.tinyagents.core.tools;
 
+import com.uu2.tinyagents.core.llm.Llm;
+import com.uu2.tinyagents.core.llm.response.AiMessageResponse;
+import com.uu2.tinyagents.core.message.AiMessage;
 import com.uu2.tinyagents.core.message.HumanMessage;
 import com.uu2.tinyagents.core.message.Message;
 import com.uu2.tinyagents.core.message.tools.AiFunctionCall;
 import com.uu2.tinyagents.core.message.tools.ToolExecMessage;
+import com.uu2.tinyagents.core.prompt.FunctionPrompt;
 import com.uu2.tinyagents.core.tools.function.Function;
 import com.uu2.tinyagents.core.util.StringUtil;
 
@@ -14,14 +18,33 @@ import java.util.regex.Pattern;
 
 
 public class ToolExecContext {
+    private final FunctionPrompt prompt;
     private Map<String, Function> funcMap;
     private Map<String, Object> toolExecResults = new HashMap<>();
 
-    protected ToolExecContext(Map<String, Function> funcMap) {
-        this.funcMap = funcMap;
+    protected ToolExecContext(FunctionPrompt prompt) {
+        this.prompt = prompt;
+
+        this.funcMap = prompt.getFunctionMap();
     }
 
-    public List<Message> execCalls(List<AiFunctionCall> calls) {
+    public AiMessageResponse execChat(final Llm llm) {
+        AiMessageResponse response = llm.chat(prompt);
+        prompt.processAssistantMessage(response.getMessage());
+
+        while (prompt.isHasToolCalls()) {
+            this.doCalls(response.getMessage());
+
+            response = llm.chat(prompt);
+            prompt.processAssistantMessage(response.getMessage());
+        }
+
+        return response;
+    }
+
+    private void doCalls(AiMessage message) {
+
+        List<AiFunctionCall> calls = message.getCalls();
         Queue<AiFunctionCall> callsQueue = new LinkedList<>(calls.stream().map(AiFunctionCall::new).toList());
         List<Message> execMessages = new LinkedList<>();
 
@@ -30,12 +53,12 @@ public class ToolExecContext {
             AiFunctionCall fc = callsQueue.poll();
             String dependenceTool = this.functionArgsCompute(fc);
             if (StringUtil.hasText(dependenceTool)) {
-                if(stopFlag != fc) {
+                if (stopFlag != fc) {
                     callsQueue.offer(fc);
                     stopFlag = fc;
                     continue;
                 } else {
-                    execMessages.add(HumanMessage.of("需要 ["+dependenceTool+"] 的调用信息和参数信息"));
+                    execMessages.add(HumanMessage.of("需要 [" + dependenceTool + "] 的调用信息和参数信息"));
                     break;
                 }
             }
@@ -48,7 +71,7 @@ public class ToolExecContext {
             toolExecResults.put(fc.getName(), execRes);
             execMessages.add(new ToolExecMessage(fc.getCallId(), execRes));
         }
-        return execMessages;
+        prompt.getFullMessage().addAll(execMessages);
     }
 
     private String functionArgsCompute(AiFunctionCall fc) {
@@ -72,7 +95,7 @@ public class ToolExecContext {
         return dependenceTool.get();
     }
 
-    public static ToolExecContext of(Map<String, Function> funcMap) {
-        return new ToolExecContext(funcMap);
+    public static ToolExecContext of(FunctionPrompt prompt) {
+        return new ToolExecContext(prompt);
     }
 }

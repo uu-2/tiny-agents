@@ -12,6 +12,8 @@
         <module>tiny-agents-pom</module>
         <module>tiny-agents-core</module>
         <module>tiny-agents-llm</module>
+        <module>tiny-agents-memory</module>
+        <module>tiny-agents-memory/tiny-agents-memory-mybatis</module>
     </modules>
 
     <properties>

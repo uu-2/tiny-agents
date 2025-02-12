@@ -1,5 +1,6 @@
 package com.uu2.tinyagents.core.llm;
 
+import com.uu2.tinyagents.core.llm.embedding.EmbeddingModel;
 import com.uu2.tinyagents.core.llm.exception.LlmException;
 import com.uu2.tinyagents.core.llm.response.AbstractMessageResponse;
 import com.uu2.tinyagents.core.llm.response.AiMessageResponse;
@@ -7,7 +8,7 @@ import com.uu2.tinyagents.core.message.AiMessage;
 import com.uu2.tinyagents.core.prompt.Prompt;
 import com.uu2.tinyagents.core.prompt.TextPrompt;
 
-public interface Llm {
+public interface Llm extends EmbeddingModel {
     default String chat(String prompt) {
         return chat(prompt, ChatOptions.DEFAULT);
     }
