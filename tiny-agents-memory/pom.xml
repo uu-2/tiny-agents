@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.uu2</groupId>
         <artifactId>tiny-agents</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>tiny-agents-memory</artifactId>
@@ -14,6 +14,7 @@
     <modules>
         <module>tiny-agents-memory-redis</module>
         <module>tiny-agents-memory-mongo</module>
+        <module>tiny-agents-memory-mybatis</module>
     </modules>
 
     <properties>

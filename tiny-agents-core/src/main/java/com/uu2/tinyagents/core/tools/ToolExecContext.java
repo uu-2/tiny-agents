@@ -19,8 +19,8 @@ import java.util.regex.Pattern;
 
 public class ToolExecContext {
     private final FunctionPrompt prompt;
-    private Map<String, Function> funcMap;
-    private Map<String, Object> toolExecResults = new HashMap<>();
+    private final Map<String, Function> funcMap;
+    private final Map<String, Object> toolExecResults = new HashMap<>();
 
     protected ToolExecContext(FunctionPrompt prompt) {
         this.prompt = prompt;

@@ -13,7 +13,6 @@
         <module>tiny-agents-core</module>
         <module>tiny-agents-llm</module>
         <module>tiny-agents-memory</module>
-        <module>tiny-agents-memory/tiny-agents-memory-mybatis</module>
     </modules>
 
     <properties>
@@ -24,6 +23,7 @@
 
         <revision>1.0.0</revision>
         <junit.version>4.13.2</junit.version>
+        <mockito.version>5.5.0</mockito.version>
         <lombok.version>1.18.30</lombok.version>
         <okhttp.version>4.9.3</okhttp.version>
         <slf4j.version>1.7.36</slf4j.version>
@@ -48,7 +48,20 @@
                 <groupId>com.uu2</groupId>
                 <artifactId>tiny-agents-core</artifactId>
             </dependency>
+            <dependency>
+                <groupId>com.uu2</groupId>
+                <artifactId>tiny-agents-llm</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.uu2</groupId>
+                <artifactId>tiny-agents-memory</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.uu2</groupId>
+                <artifactId>tiny-agents-memory-redis</artifactId>
+            </dependency>
 
+            <!-- lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -107,6 +120,12 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

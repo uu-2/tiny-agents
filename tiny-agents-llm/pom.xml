@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.uu2</groupId>
         <artifactId>tiny-agents</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>tiny-agents-llm</artifactId>

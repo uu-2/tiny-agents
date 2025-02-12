@@ -10,7 +10,10 @@ public interface ChatMemory extends Memory {
 
     void addMessage(Message message);
 
-    default void addMessages(Collection<Message> messages){
+    default void addMessages(Collection<Message> messages) {
+        if (messages == null || messages.isEmpty()) {
+            return;
+        }
         for (Message message : messages) {
             addMessage(message);
         }

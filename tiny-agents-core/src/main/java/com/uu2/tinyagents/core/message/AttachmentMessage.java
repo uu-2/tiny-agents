@@ -25,6 +25,10 @@ public class AttachmentMessage extends Message {
         attachments.add(attachment);
     }
 
+    public static AttachmentMessage of(String content) {
+        return new AttachmentMessage(content);
+    }
+
     @Override
     public Object prompt() {
         List<Attachment> res = new ArrayList<>();

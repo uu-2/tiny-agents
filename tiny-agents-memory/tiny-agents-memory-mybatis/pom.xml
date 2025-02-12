@@ -5,9 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.uu2</groupId>
-        <artifactId>tiny-agents</artifactId>
-        <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
+        <artifactId>tiny-agents-memory</artifactId>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>tiny-agents-memory-mybatis</artifactId>
