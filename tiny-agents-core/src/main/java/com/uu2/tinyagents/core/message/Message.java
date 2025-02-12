@@ -16,7 +16,7 @@ public class Message implements Serializable {
     private String role;
     private Object content;
 
-    public Message prompt() {
+    public Object prompt() {
         return this;
     }
 

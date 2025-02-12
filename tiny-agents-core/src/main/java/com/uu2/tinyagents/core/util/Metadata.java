@@ -1,7 +1,6 @@
 package com.uu2.tinyagents.core.util;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -40,4 +39,9 @@ public class Metadata implements Serializable {
         return this.metadataMap.remove(key);
     }
 
+    public void clearMetadata() {
+        if (this.metadataMap != null) {
+            this.metadataMap.clear();
+        }
+    }
 }

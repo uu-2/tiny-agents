@@ -2,7 +2,11 @@ package com.uu2.tinyagents.core.llm.embedding;
 
 
 import com.uu2.tinyagents.core.util.StringUtil;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class EmbeddingOptions {
     public static final EmbeddingOptions DEFAULT = new EmbeddingOptions(){
         @Override
@@ -13,16 +17,8 @@ public class EmbeddingOptions {
 
     private String model;
 
-    public String getModel() {
-        return model;
-    }
-
     public String getModelOrDefault(String defaultModel) {
         return StringUtil.noText(model) ? defaultModel : model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
 

@@ -4,6 +4,8 @@ import com.uu2.tinyagents.core.llm.Llm;
 import com.uu2.tinyagents.core.llm.embedding.EmbedData;
 import com.uu2.tinyagents.core.llm.exception.LlmException;
 import com.uu2.tinyagents.core.llm.response.AiMessageResponse;
+import com.uu2.tinyagents.core.message.AiMessage;
+import com.uu2.tinyagents.core.prompt.AttachmentPrompt;
 import com.uu2.tinyagents.core.prompt.FunctionPrompt;
 import com.uu2.tinyagents.core.tools.ToolExecContext;
 import com.uu2.tinyagents.core.tools.function.Function;
@@ -12,6 +14,8 @@ import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.uu2.tinyagents.core.message.AttachmentMessage.*;
 
 public class OllamaLlmTest {
 
@@ -53,7 +57,6 @@ public class OllamaLlmTest {
 
         Thread.sleep(20000);
     }
-
 
 
     @Test
@@ -113,20 +116,22 @@ public class OllamaLlmTest {
     }
 
 
-//    @Test
-//    public void testVisionModel() {
-//        OllamaLlmConfig config = new OllamaLlmConfig();
-//        config.setEndpoint("http://localhost:11434");
-//        config.setModel("llava:13b");
-//        config.setDebug(true);
-//
-//        Llm llm = new OllamaLlm(config);
-//
-//        TextPrompt prompt = TextPrompt.of("What's the weather like in Beijing?");
-//
-//        AiMessageResponse response = llm.chat(prompt);
-//        AiMessage message = response == null ? null : response.getMessage();
-//        System.out.println(message);
-//    }
+    @Test
+    public void testVisionModel() {
+        OllamaLlmConfig config = new OllamaLlmConfig();
+        config.setEndpoint("http://localhost:11434");
+        config.setModel("llava:13b");
+        config.setDebug(true);
+
+        Llm llm = new OllamaLlm(config);
+
+        AttachmentPrompt imagePrompt = new AttachmentPrompt(new OllamaAttachmentMessage("What's in the picture?"));
+        imagePrompt.addAttachments(ImageUrl.builder()
+                .imageUrl(new ImageUrl.ImageUrdDef("https://agentsflex.com/assets/images/logo.png")).build());
+
+        AiMessageResponse response = llm.chat(imagePrompt);
+        AiMessage message = response == null ? null : response.getMessage();
+        System.out.println(message);
+    }
 
 }
