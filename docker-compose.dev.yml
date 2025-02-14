@@ -30,9 +30,23 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: example
-      POSTGRES_DB: mydatabase
+      POSTGRES_DB: tiny-agents
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: tiny-agents
+      MYSQL_USER: root
+      MYSQL_PASSWORD: example
 
 volumes:
   redis-data:
   mongodb-data:
   postgresql-data:
+  mysql-data:
