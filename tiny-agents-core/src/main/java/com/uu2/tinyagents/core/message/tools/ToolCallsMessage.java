@@ -3,7 +3,9 @@ package com.uu2.tinyagents.core.message.tools;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.uu2.tinyagents.core.message.Message;
 import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,9 +23,10 @@ import java.util.List;
  * }
  */
 @Getter
+@Setter
 public class ToolCallsMessage extends Message {
     @JSONField(name = "tool_calls")
-    private final List<AiFunctionCall> toolCalls;
+    private List<AiFunctionCall> toolCalls;
 
     public ToolCallsMessage(Object content, List<AiFunctionCall> calls) {
         super(Role.ASSISTANT.getRole(), content);

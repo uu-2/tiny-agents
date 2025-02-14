@@ -33,32 +33,22 @@
 
     <dependencyManagement>
         <dependencies>
+
             <dependency>
                 <groupId>com.uu2</groupId>
-                <artifactId>tiny-agents-core</artifactId>
+                <artifactId>tiny-agents-pom</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.uu2</groupId>
-                <artifactId>tiny-agents-pom</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>com.uu2</groupId>
                 <artifactId>tiny-agents-core</artifactId>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.uu2</groupId>
                 <artifactId>tiny-agents-llm</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>com.uu2</groupId>
-                <artifactId>tiny-agents-memory</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>com.uu2</groupId>
-                <artifactId>tiny-agents-memory-redis</artifactId>
+                <version>${revision}</version>
             </dependency>
 
             <!-- lombok -->

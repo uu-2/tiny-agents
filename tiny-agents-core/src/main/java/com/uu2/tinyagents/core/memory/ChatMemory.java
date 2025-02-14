@@ -8,6 +8,8 @@ import java.util.List;
 public interface ChatMemory extends Memory {
     List<Message> getMessages();
 
+    List<Message> getMessages(int maxCount);
+
     void addMessage(Message message);
 
     default void addMessages(Collection<Message> messages) {

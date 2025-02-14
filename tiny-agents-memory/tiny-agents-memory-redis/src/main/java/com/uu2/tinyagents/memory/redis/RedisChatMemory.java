@@ -30,6 +30,13 @@ public class RedisChatMemory implements ChatMemory {
     }
 
     @Override
+    public List<Message> getMessages(int maxCount) {
+        int end = this.list.size();
+        int start = Math.max(0, end - maxCount);
+        return this.list.subList(start, end);
+    }
+
+    @Override
     public void addMessage(Message message) {
         if (message == null) {
             return;
