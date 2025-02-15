@@ -9,13 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>tiny-agents-llm</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>tiny-agents-llm-ollama</module>
-        <module>tiny-agents-llm-openai</module>
-        <module>tiny-agents-llm-deepseek</module>
-    </modules>
+    <artifactId>tiny-agents-image</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

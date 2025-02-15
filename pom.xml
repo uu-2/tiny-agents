@@ -13,6 +13,8 @@
         <module>tiny-agents-core</module>
         <module>tiny-agents-llm</module>
         <module>tiny-agents-memory</module>
+        <module>tiny-agents-image</module>
+        <module>tiny-agents-audio</module>
     </modules>
 
     <properties>
