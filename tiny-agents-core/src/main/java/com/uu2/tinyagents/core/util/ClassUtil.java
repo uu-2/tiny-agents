@@ -13,8 +13,6 @@ import java.util.function.Predicate;
 /**
  * 类实例创建者创建者
  *
- * @author michael
- * @date 17/3/21
  */
 public class ClassUtil {
 

@@ -23,7 +23,6 @@
             <artifactId>tiny-agents-core</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>

@@ -5,19 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.uu2</groupId>
-        <artifactId>tiny-agents</artifactId>
+        <artifactId>tiny-agents-llm</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>tiny-agents-llm</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>tiny-agents-llm-ollama</module>
-        <module>tiny-agents-llm-openai</module>
-        <module>tiny-agents-llm-deepseek</module>
-        <module>tiny-agents-llm-zhipuai</module>
-        <module>tiny-agents-llm-coze</module>
-    </modules>
+    <artifactId>tiny-agents-llm-coze</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -25,4 +17,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.uu2</groupId>
+            <artifactId>tiny-agents-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
