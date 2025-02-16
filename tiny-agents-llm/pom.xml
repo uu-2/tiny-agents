@@ -22,6 +22,7 @@
         <module>tiny-agents-llm-qwen</module>
         <module>tiny-agents-llm-qianfan</module>
         <module>tiny-agents-llm-spark</module>
+        <module>tiny-agents-llm-siliconflow</module>
     </modules>
 
     <properties>
