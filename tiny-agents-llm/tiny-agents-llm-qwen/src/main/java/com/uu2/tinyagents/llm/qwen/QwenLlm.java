@@ -1,8 +1,6 @@
-package com.uu2.tinyagents.llm.openai;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPath;
+package com.uu2.tinyagents.llm.qwen;
+
 import com.uu2.tinyagents.core.llm.BaseLlm;
 import com.uu2.tinyagents.core.llm.ChatOptions;
 import com.uu2.tinyagents.core.llm.StreamResponseListener;
@@ -11,40 +9,35 @@ import com.uu2.tinyagents.core.llm.client.HttpClient;
 import com.uu2.tinyagents.core.llm.client.LlmClient;
 import com.uu2.tinyagents.core.llm.client.LlmClientListener;
 import com.uu2.tinyagents.core.llm.client.impl.SseClient;
-import com.uu2.tinyagents.core.llm.embedding.EmbedData;
 import com.uu2.tinyagents.core.llm.embedding.EmbeddingOptions;
 import com.uu2.tinyagents.core.llm.response.AiMessageResponse;
 import com.uu2.tinyagents.core.llm.response.parser.AiMessageParser;
 import com.uu2.tinyagents.core.prompt.Prompt;
 import com.uu2.tinyagents.core.util.StringUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPath;
+import com.uu2.tinyagents.core.llm.embedding.EmbedData;
+import com.uu2.tinyagents.core.util.Maps;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
-public class OpenAILlm extends BaseLlm<OpenAILlmConfig> {
-    private final HttpClient httpClient = new HttpClient();
-    public AiMessageParser aiMessageParser = OpenAiLlmUtil.getAiMessageParser(false);
-    public AiMessageParser streamMessageParser = OpenAiLlmUtil.getAiMessageParser(true);
+public class QwenLlm extends BaseLlm<QwenLlmConfig> {
 
-    public static OpenAILlm of(String apiKey) {
-        OpenAILlmConfig config = new OpenAILlmConfig();
-        config.setApiKey(apiKey);
-        return new OpenAILlm(config);
-    }
 
-    public static OpenAILlm of(String apiKey, String endpoint) {
-        OpenAILlmConfig config = new OpenAILlmConfig();
-        config.setApiKey(apiKey);
-        config.setEndpoint(endpoint);
-        return new OpenAILlm(config);
-    }
+    HttpClient httpClient = new HttpClient();
 
-    public OpenAILlm(OpenAILlmConfig config) {
+    public AiMessageParser aiMessageParser = QwenLlmUtil.getAiMessageParser(false);
+    public AiMessageParser streamMessageParser = QwenLlmUtil.getAiMessageParser(true);
+
+
+    public QwenLlm(QwenLlmConfig config) {
         super(config);
     }
+
 
     @Override
     public AiMessageResponse chat(Prompt prompt, ChatOptions options) {
@@ -52,14 +45,10 @@ public class OpenAILlm extends BaseLlm<OpenAILlmConfig> {
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Bearer " + getConfig().getApiKey());
 
-        Consumer<Map<String, String>> headersConfig = config.getHeadersConfig();
-        if (headersConfig != null) {
-            headersConfig.accept(headers);
-        }
 
-        String payload = OpenAiLlmUtil.promptToPayload(prompt, config, options, false);
+        String payload = QwenLlmUtil.promptToPayload(prompt, config, options, false);
         String endpoint = config.getEndpoint();
-        String response = httpClient.post(endpoint + "/v1/chat/completions", headers, payload);
+        String response = httpClient.post(endpoint + "/compatible-mode/v1/chat/completions", headers, payload);
 
         if (config.isDebug()) {
             System.out.println(">>>>receive payload:" + response);
@@ -91,24 +80,28 @@ public class OpenAILlm extends BaseLlm<OpenAILlmConfig> {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Bearer " + getConfig().getApiKey());
+        headers.put("X-DashScope-SSE", "enable"); //stream
 
-        String payload = OpenAiLlmUtil.promptToPayload(prompt, config, options, true);
-        String endpoint = config.getEndpoint();
+        String payload = QwenLlmUtil.promptToPayload(prompt, config, options, true);
         LlmClientListener clientListener = new BaseLlmClientListener(this, llmClient, listener, prompt, streamMessageParser);
-        llmClient.start(endpoint + "/v1/chat/completions", headers, payload, clientListener, config);
+
+        String endpoint = config.getEndpoint();
+        llmClient.start(endpoint + "/compatible-mode/v1/chat/completions", headers, payload, clientListener, config);
     }
 
 
     @Override
     public EmbedData embed(EmbeddingOptions options, String... documents) {
+        String payload = Maps.of("model", options.getModelOrDefault(config.getDefaultEmbeddingModel()))
+                .set("encoding_format", "float")
+                .set("input", documents)
+                .toJSON();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Bearer " + getConfig().getApiKey());
 
-        String payload = OpenAiLlmUtil.promptToEmbeddingsPayload(documents[0], options, config);
-        String endpoint = config.getEndpoint();
-        // https://platform.openai.com/docs/api-reference/embeddings/create
-        String response = httpClient.post(endpoint + "/v1/embeddings", headers, payload);
+        String url = config.getEndpoint() + "/compatible-mode/v1/embeddings";
+        String response = httpClient.post(url, headers, payload);
 
         if (config.isDebug()) {
             System.out.println(">>>>receive payload:" + response);
@@ -130,4 +123,5 @@ public class OpenAILlm extends BaseLlm<OpenAILlmConfig> {
 
         return vectorData;
     }
+
 }
