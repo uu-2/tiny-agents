@@ -27,11 +27,11 @@ public class SiliconFlowLlmTest {
 
     @Before
     public void init() {
-        ZhipuAILlmConfig config = new ZhipuAILlmConfig();
+        SiliconFlowLlmConfig config = new SiliconFlowLlmConfig();
         config.setApiKey(apiKey);
         config.setDebug(true);
 
-        llm = new ZhipuAILlm(config);
+        llm = new SiliconFlowLlm(config);
     }
 
     @Test
@@ -45,12 +45,12 @@ public class SiliconFlowLlmTest {
     @Test(expected = LlmException.class)
     public void testChat() {
 
-        ZhipuAILlmConfig config = new ZhipuAILlmConfig();
+        SiliconFlowLlmConfig config = new SiliconFlowLlmConfig();
         config.setApiKey(apiKey);
         config.setModel("llama3");
         config.setDebug(true);
 
-        llm = new ZhipuAILlm(config);
+        llm = new SiliconFlowLlm(config);
 
         String chat = llm.chat("who are your");
         System.out.println(chat);
@@ -126,12 +126,12 @@ public class SiliconFlowLlmTest {
     @Test
     public void testVisionModel() {
 
-        ZhipuAILlmConfig config = new ZhipuAILlmConfig();
+        SiliconFlowLlmConfig config = new SiliconFlowLlmConfig();
         config.setApiKey(apiKey);
         config.setModel("glm-4v-plus");
         config.setDebug(true);
 
-        llm = new ZhipuAILlm(config);
+        llm = new SiliconFlowLlm(config);
 
         AttachmentPrompt imagePrompt = new AttachmentPrompt(new AttachmentMessage("What's in the picture?"));
         imagePrompt.addAttachments(AttachmentMessage.ImageUrl.builder()
