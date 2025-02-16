@@ -15,12 +15,14 @@ public class AiFunctionCall implements Serializable {
     private Integer index;
     @JSONField(name = "call_id")
     private String callId;
+    private String type;
     private String name;
     private Map<String, Object> args;
 
     public AiFunctionCall(AiFunctionCall aiFunctionCall) {
         this.index = aiFunctionCall.index;
         this.callId = aiFunctionCall.callId;
+        this.type = aiFunctionCall.type;
         this.name = aiFunctionCall.name;
         this.args = new HashMap<>(aiFunctionCall.args);
     }

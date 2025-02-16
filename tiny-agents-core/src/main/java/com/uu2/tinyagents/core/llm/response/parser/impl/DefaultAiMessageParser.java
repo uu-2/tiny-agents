@@ -157,6 +157,11 @@ public class DefaultAiMessageParser implements AiMessageParser {
                 JSONObject functionObject = jsonObject.getJSONObject("function");
                 if (functionObject != null) {
                     AiFunctionCall aiFunctionCall = new AiFunctionCall();
+                    aiFunctionCall.setCallId(jsonObject.getString("id") == null ?
+                            String.valueOf(i) : jsonObject.getString("id"));
+                    aiFunctionCall.setIndex(jsonObject.getInteger("index") == null ?
+                            i : jsonObject.getInteger("index"));
+                    aiFunctionCall.setType(jsonObject.getString("type"));
                     aiFunctionCall.setName(functionObject.getString("name"));
                     Object arguments = functionObject.get("arguments");
                     if (arguments instanceof Map) {

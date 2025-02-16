@@ -1,12 +1,14 @@
 package com.uu2.tinyagents.core.util;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@Setter
 public class Metadata implements Serializable {
 
     protected Map<String, Object> metadataMap;

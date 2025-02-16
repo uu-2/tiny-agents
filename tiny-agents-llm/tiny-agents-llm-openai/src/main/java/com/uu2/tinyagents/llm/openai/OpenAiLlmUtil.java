@@ -36,12 +36,16 @@ public class OpenAiLlmUtil {
 
     public static String promptToPayload(Prompt prompt, OpenAILlmConfig config, ChatOptions options, boolean withStream) {
         List<Message> messages = prompt.messages();
-        HumanMessage humanMessage = (HumanMessage) CollectionUtil.lastItem(messages);
+        Object toolChoice = "auto";
+
+        if(CollectionUtil.lastItem(messages) instanceof HumanMessage humanMessage) {
+            toolChoice = humanMessage.getToolChoice();
+        }
         return Maps.of("model", config.getModel())
                 .set("messages", promptFormat.messagesFormat(prompt))
                 .setIf(withStream, "stream", true)
                 .setIfNotEmpty("tools", promptFormat.toolsFormat(prompt))
-                .setIfContainsKey("tools", "tool_choice", humanMessage.getToolChoice())
+                .setIfContainsKey("tools", "tool_choice", toolChoice)
                 .setIfNotNull("top_p", options.getTopP())
                 .setIfNotEmpty("stop", options.getStop())
                 .setIf(map -> !map.containsKey("tools") && options.getTemperature() > 0, "temperature", options.getTemperature())

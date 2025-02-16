@@ -34,7 +34,7 @@ public class AttachmentMessage extends Message {
         List<Attachment> res = new ArrayList<>();
         res.add(Text.builder().text(this.getContent()).build());
         res.addAll(this.attachments);
-        return res;
+        return HumanMessage.of(res);
     }
 
     public interface Attachment extends Serializable {

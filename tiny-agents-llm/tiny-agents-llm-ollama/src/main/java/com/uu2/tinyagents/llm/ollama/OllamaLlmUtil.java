@@ -8,12 +8,14 @@ import com.alibaba.fastjson.JSONPath;
 import com.uu2.tinyagents.core.llm.ChatOptions;
 import com.uu2.tinyagents.core.llm.response.parser.AiMessageParser;
 import com.uu2.tinyagents.core.llm.response.parser.impl.DefaultAiMessageParser;
+import com.uu2.tinyagents.core.message.HumanMessage;
 import com.uu2.tinyagents.core.message.tools.AiFunctionCall;
 import com.uu2.tinyagents.core.message.Message;
 import com.uu2.tinyagents.core.message.MessageStatus;
 import com.uu2.tinyagents.core.prompt.DefaultPromptFormat;
 import com.uu2.tinyagents.core.prompt.Prompt;
 import com.uu2.tinyagents.core.prompt.PromptFormat;
+import com.uu2.tinyagents.core.util.CollectionUtil;
 import com.uu2.tinyagents.core.util.Maps;
 
 import java.util.ArrayList;
@@ -77,10 +79,17 @@ public class OllamaLlmUtil {
 
 
     public static String promptToPayload(Prompt prompt, OllamaLlmConfig config, ChatOptions options, boolean stream) {
+        List<Message> messages = prompt.messages();
+        Object toolChoice = "auto";
+
+        if(CollectionUtil.lastItem(messages) instanceof HumanMessage humanMessage) {
+            toolChoice = humanMessage.getToolChoice();
+        }
         return Maps.of("model", config.getModel())
                 .set("messages", promptFormat.messagesFormat(prompt))
                 .setIf(!stream, "stream", stream)
                 .setIfNotEmpty("tools", promptFormat.toolsFormat(prompt))
+                .setIfContainsKey("tools", "tool_choice", toolChoice)
                 .setIfNotEmpty("options.seed", options.getSeed())
                 .setIfNotEmpty("options.top_k", options.getTopK())
                 .setIfNotEmpty("options.top_p", options.getTopP())

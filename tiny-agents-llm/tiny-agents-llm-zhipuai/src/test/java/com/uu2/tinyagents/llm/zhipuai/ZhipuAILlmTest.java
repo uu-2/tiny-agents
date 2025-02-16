@@ -1,32 +1,42 @@
-package com.uu2.tinyagents.llm.ollama;
+package com.uu2.tinyagents.llm.zhipuai;
 
+
+import com.alibaba.fastjson2.JSON;
 import com.uu2.tinyagents.core.llm.Llm;
 import com.uu2.tinyagents.core.llm.embedding.EmbedData;
 import com.uu2.tinyagents.core.llm.exception.LlmException;
 import com.uu2.tinyagents.core.llm.response.AiMessageResponse;
 import com.uu2.tinyagents.core.message.AiMessage;
+import com.uu2.tinyagents.core.message.AttachmentMessage;
 import com.uu2.tinyagents.core.prompt.AttachmentPrompt;
 import com.uu2.tinyagents.core.prompt.FunctionPrompt;
 import com.uu2.tinyagents.core.tools.ToolExecContext;
 import com.uu2.tinyagents.core.tools.function.Function;
 import com.uu2.tinyagents.core.tools.function.Parameter;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static com.uu2.tinyagents.core.message.AttachmentMessage.*;
+public class ZhipuAILlmTest {
 
-public class OllamaLlmTest {
+    Llm llm;
+    // @see https://www.bigmodel.cn/usercenter/proj-mgmt/apikeys
+    private final String  apiKey = "<your apikey>";
+
+    @Before
+    public void init() {
+        ZhipuAILlmConfig config = new ZhipuAILlmConfig();
+        config.setApiKey(apiKey);
+        config.setDebug(true);
+
+        llm = new ZhipuAILlm(config);
+    }
 
     @Test
     public void testChatOK() {
-        OllamaLlmConfig config = new OllamaLlmConfig();
-        config.setEndpoint("http://localhost:11434");
-        config.setModel("llama3.2");
-        config.setDebug(true);
 
-        Llm llm = new OllamaLlm(config);
         String chat = llm.chat("who are your");
         System.out.println(chat);
         assert chat != null;
@@ -34,12 +44,14 @@ public class OllamaLlmTest {
 
     @Test(expected = LlmException.class)
     public void testChat() {
-        OllamaLlmConfig config = new OllamaLlmConfig();
-        config.setEndpoint("http://localhost:11434");
+
+        ZhipuAILlmConfig config = new ZhipuAILlmConfig();
+        config.setApiKey(apiKey);
         config.setModel("llama3");
         config.setDebug(true);
 
-        Llm llm = new OllamaLlm(config);
+        llm = new ZhipuAILlm(config);
+
         String chat = llm.chat("who are your");
         System.out.println(chat);
     }
@@ -47,39 +59,34 @@ public class OllamaLlmTest {
 
     @Test
     public void testChatStream() throws InterruptedException {
-        OllamaLlmConfig config = new OllamaLlmConfig();
-        config.setEndpoint("http://localhost:11434");
-        config.setModel("llama3.2");
-        config.setDebug(true);
 
-        Llm llm = new OllamaLlm(config);
         llm.chatStream("who are your", (context, response) -> System.out.println(response.getMessage().getContent()));
 
-        Thread.sleep(20000);
+        Thread.sleep(6 * 1000);
     }
 
 
     @Test
     public void testEmbedding() {
-        OllamaLlmConfig config = new OllamaLlmConfig();
-        config.setEndpoint("http://localhost:11434");
-        config.setModel("llama3.1");
-        config.setDebug(true);
 
-        Llm llm = new OllamaLlm(config);
         EmbedData embedData = llm.embed("hello world");
-        System.out.println(embedData);
+        System.out.println(JSON.toJSON(embedData));
+
+        assert embedData != null;
+        assert embedData.getVector() != null;
+        assert embedData.getVector().length == 1;
+
+        embedData = llm.embed("hello", "world");
+        System.out.println(JSON.toJSON(embedData));
+
+        assert embedData != null;
+        assert embedData.getVector() != null;
+        assert embedData.getVector().length == 2;
     }
 
 
     @Test
     public void testFunctionCall() {
-        OllamaLlmConfig config = new OllamaLlmConfig();
-        config.setEndpoint("http://localhost:11434");
-        config.setModel("qwen2.5:14b");
-        config.setDebug(true);
-
-        Llm llm = new OllamaLlm(config);
 
         FunctionPrompt prompt = new FunctionPrompt("现在是日期和时间多少，并返回现在北京天气情况？", WeatherFunctions.class);
         prompt.addFunctions(List.of(new Function() {
@@ -118,20 +125,20 @@ public class OllamaLlmTest {
 
     @Test
     public void testVisionModel() {
-        OllamaLlmConfig config = new OllamaLlmConfig();
-        config.setEndpoint("http://localhost:11434");
-        config.setModel("llava:13b");
+
+        ZhipuAILlmConfig config = new ZhipuAILlmConfig();
+        config.setApiKey(apiKey);
+        config.setModel("glm-4v-plus");
         config.setDebug(true);
 
-        Llm llm = new OllamaLlm(config);
+        llm = new ZhipuAILlm(config);
 
-        AttachmentPrompt imagePrompt = new AttachmentPrompt(new OllamaAttachmentMessage("What's in the picture?"));
-        imagePrompt.addAttachments(ImageUrl.builder()
-                .imageUrl(new ImageUrl.ImageUrdDef("https://agentsflex.com/assets/images/logo.png")).build());
+        AttachmentPrompt imagePrompt = new AttachmentPrompt(new AttachmentMessage("What's in the picture?"));
+        imagePrompt.addAttachments(AttachmentMessage.ImageUrl.builder()
+                .imageUrl(new AttachmentMessage.ImageUrl.ImageUrdDef("https://agentsflex.com/assets/images/logo.png")).build());
 
         AiMessageResponse response = llm.chat(imagePrompt);
         AiMessage message = response == null ? null : response.getMessage();
         System.out.println(message);
     }
-
 }

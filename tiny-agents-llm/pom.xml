@@ -15,6 +15,7 @@
         <module>tiny-agents-llm-ollama</module>
         <module>tiny-agents-llm-openai</module>
         <module>tiny-agents-llm-deepseek</module>
+        <module>tiny-agents-llm-zhipuai</module>
     </modules>
 
     <properties>
