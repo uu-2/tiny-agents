@@ -20,6 +20,8 @@
         <module>tiny-agents-llm-gitee</module>
         <module>tiny-agents-llm-moonshot</module>
         <module>tiny-agents-llm-qwen</module>
+        <module>tiny-agents-llm-qianfan</module>
+        <module>tiny-agents-llm-spark</module>
     </modules>
 
     <properties>

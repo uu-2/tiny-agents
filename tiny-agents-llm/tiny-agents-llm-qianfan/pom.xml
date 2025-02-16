@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>tiny-agents-llm-qwen</artifactId>
+    <artifactId>tiny-agents-llm-qianfan</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
