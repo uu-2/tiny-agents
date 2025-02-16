@@ -2,7 +2,6 @@
 package com.uu2.tinyagents.llm.qwen;
 
 import com.uu2.tinyagents.core.llm.ChatOptions;
-import com.uu2.tinyagents.core.llm.embedding.EmbeddingOptions;
 import com.uu2.tinyagents.core.llm.response.parser.AiMessageParser;
 import com.uu2.tinyagents.core.llm.response.parser.impl.DefaultAiMessageParser;
 import com.uu2.tinyagents.core.message.HumanMessage;
