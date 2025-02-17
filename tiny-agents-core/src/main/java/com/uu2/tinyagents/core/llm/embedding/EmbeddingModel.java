@@ -10,7 +10,7 @@ public interface EmbeddingModel {
 
     EmbedData embed(EmbeddingOptions options, String... documents);
 
-    default int dimensions() {
-        return embed("dimensions").getVector()[0].length;
+    default void rerank(String documents) {
+        throw new UnsupportedOperationException("rerank is not supported");
     }
 }

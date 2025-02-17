@@ -127,7 +127,7 @@ public class OllamaLlmTest {
 
         AttachmentPrompt imagePrompt = new AttachmentPrompt(new OllamaAttachmentMessage("What's in the picture?"));
         imagePrompt.addAttachments(ImageUrl.builder()
-                .imageUrl(new ImageUrl.ImageUrdDef("https://agentsflex.com/assets/images/logo.png")).build());
+                .imageUrl(new ImageUrl.ImageUrdDef("https://img.shetu66.com/2023/04/25/1682391068745168.png")).build());
 
         AiMessageResponse response = llm.chat(imagePrompt);
         AiMessage message = response == null ? null : response.getMessage();

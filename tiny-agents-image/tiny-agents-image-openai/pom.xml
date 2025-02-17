@@ -5,15 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.uu2</groupId>
-        <artifactId>tiny-agents</artifactId>
-        <version>${revision}</version>
+        <artifactId>tiny-agents-image</artifactId>
+        <version>1.0.0</version>
     </parent>
 
-    <artifactId>tiny-agents-audio</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>tiny-agents-audio-openai</module>
-    </modules>
+    <artifactId>tiny-agents-image-openai</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,4 +17,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.uu2</groupId>
+            <artifactId>tiny-agents-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

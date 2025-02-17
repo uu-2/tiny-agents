@@ -133,7 +133,7 @@ public class QwenLlmTest {
 
         AttachmentPrompt imagePrompt = new AttachmentPrompt(new AttachmentMessage("What's in the picture?"));
         imagePrompt.addAttachments(AttachmentMessage.ImageUrl.builder()
-                .imageUrl(new AttachmentMessage.ImageUrl.ImageUrdDef("https://agentsflex.com/assets/images/logo.png")).build());
+                .imageUrl(new AttachmentMessage.ImageUrl.ImageUrdDef("https://img.shetu66.com/2023/04/25/1682391068745168.png")).build());
 
         AiMessageResponse response = llm.chat(imagePrompt);
         AiMessage message = response == null ? null : response.getMessage();

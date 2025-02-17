@@ -10,6 +10,11 @@
     </parent>
 
     <artifactId>tiny-agents-image</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>tiny-agents-image-stability</module>
+        <module>tiny-agents-image-openai</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
