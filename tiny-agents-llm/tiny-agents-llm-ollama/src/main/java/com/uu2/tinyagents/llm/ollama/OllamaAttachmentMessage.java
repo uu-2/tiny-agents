@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class OllamaAttachmentMessage extends AttachmentMessage {
     public OllamaAttachmentMessage(String content) {

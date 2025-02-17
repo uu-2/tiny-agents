@@ -15,7 +15,10 @@ import java.util.stream.Collectors;
 public abstract class Prompt {
     protected List<Function> functions;
 
-    public abstract List<Message> messages();
+    public List<Message> messages() {
+        return this.messages(null);
+    }
+    public abstract List<Message> messages(Map<String, Object> params);
 
     public Map<String, Function> getFunctionMap() {
         return functions.stream().collect(Collectors.toMap(Function::getName, f -> f));

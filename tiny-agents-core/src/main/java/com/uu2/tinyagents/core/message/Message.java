@@ -1,11 +1,13 @@
 package com.uu2.tinyagents.core.message;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -17,6 +19,14 @@ public class Message implements Serializable {
     private Object content;
 
     public Object prompt() {
+        return this;
+    }
+
+    public Message format(Map<String, Object> params) {
+        if (content != null && content instanceof String
+                && params != null && !params.isEmpty()) {
+            this.content = StrUtil.format((String) content, params);
+        }
         return this;
     }
 

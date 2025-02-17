@@ -20,12 +20,12 @@ public class FunctionPrompt extends AttachmentPrompt {
     private Map<String, Object> toolExecResults = new HashMap<>();
 
     public FunctionPrompt(String content) {
-        super(new DefaultChatMemory());
-        this.addMessage(HumanMessage.of(content));
+        this(content, new DefaultChatMemory());
     }
 
-    public FunctionPrompt(ChatMemory memory) {
+    public FunctionPrompt(String content, ChatMemory memory) {
         super(memory);
+        this.addMessage(HumanMessage.of(content));
     }
 
     @Override

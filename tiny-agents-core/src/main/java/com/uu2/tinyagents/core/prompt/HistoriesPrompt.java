@@ -12,6 +12,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Setter
 @Getter
@@ -26,7 +27,7 @@ public class HistoriesPrompt extends TextPrompt {
     }
 
     @Override
-    public List<Message> messages() {
+    public List<Message> messages(Map<String, Object> params) {
         List<Message> messageList = memory.getMessages();
         if (messageList == null) messageList = new ArrayList<>();
 
@@ -37,10 +38,10 @@ public class HistoriesPrompt extends TextPrompt {
         List<Message> result = new LinkedList<>();
 
         if (getSystemMessage() != null) {
-            result.add(getSystemMessage());
+            result.add(getSystemMessage().format(params));
         }
         if (!messageList.isEmpty()) {
-            result.addAll(messageList);
+            result.addAll(messageList.stream().map(m -> m.format(params)).toList());
         }
 
         return result;
@@ -57,10 +58,10 @@ public class HistoriesPrompt extends TextPrompt {
 
 
     public void addMessage(Message message) {
-        memory.addMessage(message);
+        this.memory.addMessage(message);
     }
 
-    public void clearMemory() {
+    public void clear() {
         memory.clear();
     }
 }

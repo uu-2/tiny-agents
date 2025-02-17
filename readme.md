@@ -8,7 +8,7 @@
 ## 基本能力
 
 - LLM 的访问能力
-- Prompt 定义加载的能力
+- Prompt、Prompt Template
 - Function Calling 定义、调用和执行等能力
 - 记忆的能力（Memory）
 - Embedding
