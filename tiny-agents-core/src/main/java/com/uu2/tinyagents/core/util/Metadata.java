@@ -2,16 +2,26 @@ package com.uu2.tinyagents.core.util;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-@Getter
+@SuperBuilder
 @Setter
 public class Metadata implements Serializable {
 
     protected Map<String, Object> metadataMap;
+
+    public Map<String, Object> getMetadataMap() {
+        if (metadataMap == null) {
+            return Collections.EMPTY_MAP;
+        }
+        Map<String , Object> clone = new HashMap<>(metadataMap);
+        return clone;
+    }
 
     public Object getMetadata(String key) {
         return metadataMap != null ? metadataMap.get(key) : null;

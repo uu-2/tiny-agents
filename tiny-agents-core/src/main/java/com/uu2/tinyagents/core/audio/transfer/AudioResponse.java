@@ -1,15 +1,11 @@
 package com.uu2.tinyagents.core.audio.transfer;
 
 import com.uu2.tinyagents.core.util.Metadata;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
 public class AudioResponse extends Metadata {
     private String text;
     private byte[] audio;
@@ -18,9 +14,9 @@ public class AudioResponse extends Metadata {
     private String errorMessage;
 
     public static AudioResponse error(String errMessage) {
-        AudioResponse response = new AudioResponse();
-        response.setError(true);
-        response.setErrorMessage(errMessage);
-        return response;
+        return AudioResponse.builder()
+                .error(true)
+                .errorMessage(errMessage)
+                .build();
     }
 }

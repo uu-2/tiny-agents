@@ -6,12 +6,14 @@ import com.uu2.tinyagents.core.image.Image;
 import com.uu2.tinyagents.core.util.Metadata;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Setter
 @Getter
+@SuperBuilder
 public class ImageResponse extends Metadata {
     private List<Image> images;
     private boolean error;
@@ -19,10 +21,10 @@ public class ImageResponse extends Metadata {
 
 
     public static ImageResponse error(String errMessage) {
-        ImageResponse imageResponse = new ImageResponse();
-        imageResponse.setError(true);
-        imageResponse.setErrorMessage(errMessage);
-        return imageResponse;
+        return ImageResponse.builder()
+                .error(true)
+                .errorMessage(errMessage)
+                .build();
     }
 
 

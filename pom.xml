@@ -15,6 +15,8 @@
         <module>tiny-agents-memory</module>
         <module>tiny-agents-image</module>
         <module>tiny-agents-audio</module>
+        <module>tiny-agents-document-praser</module>
+        <module>tiny-agents-store</module>
     </modules>
 
     <properties>

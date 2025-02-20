@@ -59,3 +59,15 @@ application-dev.yml
 .vscode-test-insiders-stable-java-java/
 .vscode-test-insiders-stable-java-java-java/
 .vscode-test-insiders-stable-java-java-java-java/
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+mvnw.ps1
+mvnw.bat
+mvnw.cmd
+mvnw.ps1
+mvnw.bat
+
+volumes/

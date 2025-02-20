@@ -5,11 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.uu2</groupId>
-        <artifactId>tiny-agents-image</artifactId>
+        <artifactId>tiny-agents</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>tiny-agents-image-openai</artifactId>
+    <artifactId>tiny-agents-store</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>tiny-agents-store-milvus</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -17,16 +21,4 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.uu2</groupId>
-            <artifactId>tiny-agents-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>

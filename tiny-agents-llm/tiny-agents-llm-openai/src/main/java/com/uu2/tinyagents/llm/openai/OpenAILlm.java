@@ -118,7 +118,7 @@ public class OpenAILlm extends BaseLlm<OpenAILlmConfig> {
             return null;
         }
 
-        EmbedData vectorData = new EmbedData();
+        EmbedData vectorData = EmbedData.builder().build();
         vectorData.setMetadataMap(JSONPath.read(response, "$.usage", Map.class));
         List<Object> embeddingList = JSONPath.read(response, "$.data", ArrayList.class);
         double[][] vectors = new double[embeddingList.size()][];

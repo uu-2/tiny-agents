@@ -50,7 +50,7 @@ public class OpenAIImageModel implements ImageModel {
         if (images == null || images.isEmpty()) {
             return ImageResponse.error("image data is empty: " + responseJson);
         }
-        ImageResponse response = new ImageResponse();
+        ImageResponse response = ImageResponse.builder().build();
         for (int i = 0; i < images.size(); i++) {
             JSONObject imageObj = images.getJSONObject(i);
             response.addImage(imageObj.getString("url"));

@@ -60,7 +60,7 @@ public class OllamaLlm extends BaseLlm<OllamaLlmConfig> {
         if (StringUtil.noText(response)) {
             return null;
         }
-        EmbedData vectorData = new EmbedData();
+        EmbedData vectorData = EmbedData.builder().build();
 
         double[][] embedding = JSONPath.read(response, "$.embeddings", double[][].class);
         vectorData.setVector(embedding);

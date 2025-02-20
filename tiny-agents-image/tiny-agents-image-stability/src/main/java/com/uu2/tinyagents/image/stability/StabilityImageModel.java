@@ -40,7 +40,7 @@ public class StabilityImageModel implements ImageModel {
         try (Response response = httpClient.multipart(url, headers, payload);
              ResponseBody body = response.body()) {
             if (response.isSuccessful() && body != null) {
-                ImageResponse imageResponse = new ImageResponse();
+                ImageResponse imageResponse = ImageResponse.builder().build();
                 imageResponse.addImage(body.bytes());
                 return imageResponse;
             }
