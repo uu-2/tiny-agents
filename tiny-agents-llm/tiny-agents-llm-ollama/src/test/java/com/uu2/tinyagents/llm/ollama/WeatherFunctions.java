@@ -11,7 +11,6 @@ public class WeatherFunctions {
             @FunctionParam(name = "city", description = "the city name", required = true) String name,
             @FunctionParam(name = "date", description = "the date，required format YYYY-MM-DD HH:MM:SS", required = false) String date
     ) {
-        System.out.println(">>> tool execute => getWeatherInfo: " + name);
         return name + "的" + date + "天气是：晴天，温度是：35度，风向是：西北风。";
     }
 }

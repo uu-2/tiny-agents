@@ -12,6 +12,7 @@ import java.util.Map;
 public class Query {
 
     private String text;
+    private double[] vector;
     private List<Message> history;
     private Map<String, Object> filter;
     @Builder.Default
@@ -20,6 +21,14 @@ public class Query {
     private double similarityThreshold = 0.0;
     @Builder.Default
     private boolean outputVector = false;
+
+    public static Query of(String text) {
+        return Query.builder().text(text).build();
+    }
+
+    public static Query of(double[] vector) {
+        return Query.builder().vector(vector).build();
+    }
 
     public String filterExpression() {
         return null;

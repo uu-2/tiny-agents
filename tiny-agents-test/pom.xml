@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.uu2</groupId>
-        <artifactId>tiny-agents-store</artifactId>
-        <version>${revision}</version>
+        <artifactId>tiny-agents</artifactId>
+        <version>1.0.0</version>
     </parent>
 
-    <artifactId>tiny-agents-store-milvus</artifactId>
+    <artifactId>tiny-agents-test</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -18,20 +18,19 @@
     </properties>
 
     <dependencies>
+
         <dependency>
-            <groupId>com.uu2</groupId>
-            <artifactId>tiny-agents-core</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
         </dependency>
 
-        <!-- test -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.uu2</groupId>
             <artifactId>tiny-agents-llm-ollama</artifactId>
@@ -39,17 +38,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- milvus -->
         <dependency>
-            <groupId>io.milvus</groupId>
-            <artifactId>milvus-sdk-java</artifactId>
-            <version>2.5.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.11.0</version>
-            <scope>compile</scope>
+            <groupId>com.uu2</groupId>
+            <artifactId>tiny-agents-store-milvus</artifactId>
+            <version>${revision}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

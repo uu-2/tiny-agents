@@ -52,12 +52,20 @@ public class MilvusVectorStore implements Store {
 
     @Override
     public List<Document> search(Query query) {
-        EmbedData textVector = embeddingModel.embed(query.getText());
+        double[] vector = query.getVector();
+        if (vector == null || vector.length == 0) {
+            EmbedData textVector = embeddingModel.embed(query.getText());
+            if (textVector == null) {
+                return new ArrayList<>();
+            }
 
-        if (textVector == null) {
+            vector = textVector.getVector()[0];
+        }
+
+        if (vector == null || vector.length == 0) {
             return new ArrayList<>();
         }
-        double[] vector = textVector.getVector()[0];
+
 
         List<String> field = query.isOutputVector()
                 ? List.of("id", "content", "metadata")

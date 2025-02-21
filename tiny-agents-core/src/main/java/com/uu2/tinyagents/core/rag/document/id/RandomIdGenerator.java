@@ -8,6 +8,10 @@ import java.util.UUID;
 
 public class RandomIdGenerator implements DocumentIdGenerator {
 
+    public static String id() {
+        return UUID.randomUUID().toString();
+    }
+
     /**
      * Generate a unique ID for the Document
      *
@@ -16,6 +20,6 @@ public class RandomIdGenerator implements DocumentIdGenerator {
      */
     @Override
     public String generateId(Document document) {
-        return UUID.randomUUID().toString();
+        return id();
     }
 }

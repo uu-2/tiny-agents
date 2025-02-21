@@ -1,5 +1,6 @@
 package com.uu2.tinyagents.core.tools;
 
+import com.alibaba.fastjson.JSON;
 import com.uu2.tinyagents.core.llm.Llm;
 import com.uu2.tinyagents.core.llm.response.AiMessageResponse;
 import com.uu2.tinyagents.core.message.AiMessage;
@@ -68,6 +69,7 @@ public class ToolExecContext {
                 continue;
             }
             Object execRes = f.invoke(fc.getArgs());
+            System.out.println(">>> tool execute [" + fc.getName() + "]: " + JSON.toJSONString(message) + " ===> " + JSON.toJSONString(execRes));
             toolExecResults.put(fc.getName(), execRes);
             execMessages.add(new ToolExecMessage(fc.getCallId(), execRes));
         }

@@ -1,5 +1,6 @@
 package com.uu2.tinyagents.llm.ollama;
 
+import com.alibaba.fastjson.JSON;
 import com.uu2.tinyagents.core.llm.Llm;
 import com.uu2.tinyagents.core.llm.embedding.EmbedData;
 import com.uu2.tinyagents.core.llm.exception.LlmException;
@@ -12,6 +13,7 @@ import com.uu2.tinyagents.core.tools.function.Function;
 import com.uu2.tinyagents.core.tools.function.Parameter;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -105,7 +107,8 @@ public class OllamaLlmTest {
 
             @Override
             public Object invoke(Map<String, Object> argsMap) {
-                return "2025-2-11 22:36:12";
+                System.out.println("argsMap = " + JSON.toJSONString(argsMap));
+                return new Date().toString();
             }
         }));
 

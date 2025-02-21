@@ -18,6 +18,7 @@ import com.uu2.tinyagents.core.llm.response.parser.AiMessageParser;
 import com.uu2.tinyagents.core.prompt.Prompt;
 import com.uu2.tinyagents.core.util.Maps;
 import com.uu2.tinyagents.core.util.StringUtil;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -26,8 +27,10 @@ import java.util.Map;
 @Slf4j
 public class OllamaLlm extends BaseLlm<OllamaLlmConfig> {
 
+    @Setter
     private HttpClient httpClient = new HttpClient();
-    private final DnjsonClient dnjsonClient = new DnjsonClient();
+    @Setter
+    private DnjsonClient dnjsonClient = new DnjsonClient();
     public AiMessageParser aiMessageParser = OllamaLlmUtil.getAiMessageParser();
 
 
