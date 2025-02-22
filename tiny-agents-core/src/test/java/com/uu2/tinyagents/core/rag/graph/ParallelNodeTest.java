@@ -1,7 +1,7 @@
 package com.uu2.tinyagents.core.rag.graph;
 
 
-import com.uu2.tinyagents.core.rag.document.id.RandomIdGenerator;
+import com.uu2.tinyagents.core.document.id.RandomIdGenerator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,14 +29,14 @@ public class ParallelNodeTest {
         };
 
         String id = RandomIdGenerator.id();
-        Node node = ParallelNode.builder()
+        Node node = Node.builder()
                 .id(id)
                 .tasks(List.of(t, t, t, t))
                 .build();
 
         ExecuteContext ctx = new ExecuteContext();
         try {
-            node.invoke(ctx);
+            node.invoke(ctx, null);
 
             System.out.println(ctx.getResults());
 

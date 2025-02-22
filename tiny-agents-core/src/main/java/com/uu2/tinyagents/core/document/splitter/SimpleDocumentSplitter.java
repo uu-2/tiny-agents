@@ -1,10 +1,10 @@
 
-package com.uu2.tinyagents.core.rag.document.splitter;
+package com.uu2.tinyagents.core.document.splitter;
 
 
-import com.uu2.tinyagents.core.rag.document.Document;
-import com.uu2.tinyagents.core.rag.document.DocumentSplitter;
-import com.uu2.tinyagents.core.rag.document.id.DocumentIdGenerator;
+import com.uu2.tinyagents.core.document.Document;
+import com.uu2.tinyagents.core.document.DocumentSplitter;
+import com.uu2.tinyagents.core.document.id.DocumentIdGenerator;
 import com.uu2.tinyagents.core.util.StringUtil;
 import lombok.Getter;
 import lombok.Setter;

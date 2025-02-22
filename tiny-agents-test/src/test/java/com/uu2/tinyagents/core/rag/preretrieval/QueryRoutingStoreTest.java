@@ -1,6 +1,6 @@
 package com.uu2.tinyagents.core.rag.preretrieval;
 
-import com.uu2.tinyagents.core.rag.document.Document;
+import com.uu2.tinyagents.core.document.Document;
 import com.uu2.tinyagents.llm.ollama.OllamaLlm;
 import com.uu2.tinyagents.llm.ollama.OllamaLlmConfig;
 import com.uu2.tinyagents.store.milvus.MilvusVectorStore;

@@ -1,8 +1,8 @@
 
-package com.uu2.tinyagents.core.rag.document.loader;
+package com.uu2.tinyagents.core.document.loader;
 
 
-import com.uu2.tinyagents.core.rag.document.DocumentParser;
+import com.uu2.tinyagents.core.document.DocumentParser;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

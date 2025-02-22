@@ -1,8 +1,8 @@
 
-package com.uu2.tinyagents.core.rag.document.id;
+package com.uu2.tinyagents.core.document.id;
 
 
-import com.uu2.tinyagents.core.rag.document.Document;
+import com.uu2.tinyagents.core.document.Document;
 
 import java.util.UUID;
 

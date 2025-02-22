@@ -1,5 +1,5 @@
 
-package com.uu2.tinyagents.core.rag.document.splitter;
+package com.uu2.tinyagents.core.document.splitter;
 
 
 import com.knuddels.jtokkit.Encodings;
@@ -7,9 +7,9 @@ import com.knuddels.jtokkit.api.Encoding;
 import com.knuddels.jtokkit.api.EncodingRegistry;
 import com.knuddels.jtokkit.api.EncodingType;
 import com.knuddels.jtokkit.api.IntArrayList;
-import com.uu2.tinyagents.core.rag.document.Document;
-import com.uu2.tinyagents.core.rag.document.DocumentSplitter;
-import com.uu2.tinyagents.core.rag.document.id.DocumentIdGenerator;
+import com.uu2.tinyagents.core.document.Document;
+import com.uu2.tinyagents.core.document.DocumentSplitter;
+import com.uu2.tinyagents.core.document.id.DocumentIdGenerator;
 import com.uu2.tinyagents.core.util.StringUtil;
 
 import java.util.ArrayList;

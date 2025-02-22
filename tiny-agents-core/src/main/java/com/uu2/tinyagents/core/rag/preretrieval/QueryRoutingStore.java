@@ -3,17 +3,14 @@ package com.uu2.tinyagents.core.rag.preretrieval;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.uu2.tinyagents.core.llm.Llm;
-import com.uu2.tinyagents.core.llm.embedding.EmbedData;
 import com.uu2.tinyagents.core.llm.response.AiMessageResponse;
 import com.uu2.tinyagents.core.prompt.TextPrompt;
-import com.uu2.tinyagents.core.rag.document.Document;
-import com.uu2.tinyagents.core.rag.store.Query;
+import com.uu2.tinyagents.core.document.Document;
 import com.uu2.tinyagents.core.rag.store.Store;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

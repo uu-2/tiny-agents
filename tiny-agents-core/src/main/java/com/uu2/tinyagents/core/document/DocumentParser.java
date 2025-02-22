@@ -1,4 +1,4 @@
-package com.uu2.tinyagents.core.rag.document;
+package com.uu2.tinyagents.core.document;
 
 import java.io.InputStream;
 

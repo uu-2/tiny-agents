@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.google.gson.JsonObject;
 import com.uu2.tinyagents.core.llm.embedding.EmbedData;
 import com.uu2.tinyagents.core.llm.embedding.EmbeddingModel;
-import com.uu2.tinyagents.core.rag.document.Document;
+import com.uu2.tinyagents.core.document.Document;
 import com.uu2.tinyagents.core.rag.store.Query;
 import com.uu2.tinyagents.core.rag.store.Store;
 import com.uu2.tinyagents.core.util.ArrayUtil;

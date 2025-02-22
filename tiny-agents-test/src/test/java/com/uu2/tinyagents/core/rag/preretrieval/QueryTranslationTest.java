@@ -1,7 +1,7 @@
 package com.uu2.tinyagents.core.rag.preretrieval;
 
 import com.uu2.tinyagents.core.llm.client.HttpClient;
-import com.uu2.tinyagents.core.rag.document.Document;
+import com.uu2.tinyagents.core.document.Document;
 import com.uu2.tinyagents.llm.ollama.OllamaLlm;
 import com.uu2.tinyagents.llm.ollama.OllamaLlmConfig;
 import okhttp3.OkHttpClient;
@@ -9,12 +9,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 

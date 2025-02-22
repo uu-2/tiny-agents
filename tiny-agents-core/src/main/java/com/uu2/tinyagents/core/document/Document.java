@@ -1,11 +1,9 @@
-package com.uu2.tinyagents.core.rag.document;
+package com.uu2.tinyagents.core.document;
 
 import com.uu2.tinyagents.core.util.Metadata;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
-
-import javax.print.Doc;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

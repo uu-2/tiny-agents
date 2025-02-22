@@ -1,6 +1,6 @@
 package com.uu2.tinyagents.core.rag.retrieval;
 
-import com.uu2.tinyagents.core.rag.document.Document;
+import com.uu2.tinyagents.core.document.Document;
 import com.uu2.tinyagents.core.rag.store.Query;
 
 import java.util.List;

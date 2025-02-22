@@ -1,7 +1,7 @@
 package com.uu2.tinyagents.core.rag.store;
 
 import com.uu2.tinyagents.core.llm.embedding.EmbeddingModel;
-import com.uu2.tinyagents.core.rag.document.Document;
+import com.uu2.tinyagents.core.document.Document;
 
 import java.util.List;
 

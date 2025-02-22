@@ -1,10 +1,10 @@
 
-package com.uu2.tinyagents.core.rag.document.loader;
+package com.uu2.tinyagents.core.document.loader;
 
 
-import com.uu2.tinyagents.core.rag.document.Document;
-import com.uu2.tinyagents.core.rag.document.DocumentLoader;
-import com.uu2.tinyagents.core.rag.document.DocumentParser;
+import com.uu2.tinyagents.core.document.Document;
+import com.uu2.tinyagents.core.document.DocumentLoader;
+import com.uu2.tinyagents.core.document.DocumentParser;
 
 import java.io.IOException;
 import java.io.InputStream;

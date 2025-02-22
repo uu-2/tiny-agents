@@ -3,7 +3,7 @@ package com.uu2.tinyagents.core.rag.preretrieval;
 import com.uu2.tinyagents.core.llm.Llm;
 import com.uu2.tinyagents.core.llm.response.AiMessageResponse;
 import com.uu2.tinyagents.core.prompt.TextPrompt;
-import com.uu2.tinyagents.core.rag.document.Document;
+import com.uu2.tinyagents.core.document.Document;
 
 import java.util.Arrays;
 import java.util.List;

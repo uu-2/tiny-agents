@@ -1,6 +1,6 @@
-package com.uu2.tinyagents.core.rag.document;
+package com.uu2.tinyagents.core.document;
 
-import com.uu2.tinyagents.core.rag.document.id.DocumentIdGenerator;
+import com.uu2.tinyagents.core.document.id.DocumentIdGenerator;
 
 import java.util.List;
 
