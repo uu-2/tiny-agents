@@ -17,7 +17,7 @@
         <module>tiny-agents-audio</module>
         <module>tiny-agents-document-praser</module>
         <module>tiny-agents-store</module>
-        <module>tiny-agents-test</module>
+        <module>tiny-agents-example</module>
     </modules>
 
     <properties>

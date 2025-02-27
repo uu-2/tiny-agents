@@ -7,6 +7,7 @@ import com.uu2.tinyagents.core.message.Message;
 import com.uu2.tinyagents.core.tools.function.Function;
 import com.uu2.tinyagents.core.tools.function.JavaNativeFunctions;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
+@Setter
 public abstract class Prompt {
     protected List<Function> functions;
     protected Map<String, Object> params;
@@ -25,6 +27,8 @@ public abstract class Prompt {
     public abstract List<Message> messages(Map<String, Object> params);
 
     public Map<String, Function> getFunctionMap() {
+        if (functions == null)
+            return Map.of();
         return functions.stream().collect(Collectors.toMap(Function::getName, f -> f));
     }
 

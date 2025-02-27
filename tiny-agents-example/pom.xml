@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>tiny-agents-test</artifactId>
+    <artifactId>tiny-agents-example</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -35,15 +35,14 @@
             <groupId>com.uu2</groupId>
             <artifactId>tiny-agents-llm-ollama</artifactId>
             <version>${revision}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.uu2</groupId>
             <artifactId>tiny-agents-store-milvus</artifactId>
             <version>${revision}</version>
-            <scope>test</scope>
         </dependency>
+
     </dependencies>
 
 </project>

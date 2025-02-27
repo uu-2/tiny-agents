@@ -3,7 +3,7 @@ package com.uu2.tinyagents.core.rag.graph;
 import lombok.NoArgsConstructor;
 
 public interface Condition {
-    String cond();
+    String cond(ExecuteContext ctx, ExecuteResult fromNodeResult);
 
     static Condition Any(String any) {
         return new AnyCond(any);
@@ -21,7 +21,7 @@ public interface Condition {
         }
 
         @Override
-        public String cond() {
+        public String cond(ExecuteContext ctx, ExecuteResult fromNodeResult) {
             return any;
         }
 

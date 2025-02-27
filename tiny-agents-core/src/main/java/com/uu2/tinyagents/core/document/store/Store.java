@@ -1,4 +1,4 @@
-package com.uu2.tinyagents.core.rag.store;
+package com.uu2.tinyagents.core.document.store;
 
 import com.uu2.tinyagents.core.llm.embedding.EmbeddingModel;
 import com.uu2.tinyagents.core.document.Document;

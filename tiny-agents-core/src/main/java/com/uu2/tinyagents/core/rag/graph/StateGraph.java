@@ -1,5 +1,6 @@
 package com.uu2.tinyagents.core.rag.graph;
 
+import com.uu2.tinyagents.core.rag.Question;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -66,19 +67,40 @@ public class StateGraph {
         return true;
     }
 
-    public Object invoke(ExecuteContext ctx) throws InterruptedException {
+    public ExecuteResult invoke(ExecuteContext ctx) {
         Edge edge = this.edges.get(START);
         String prevNodeId = START;
         while (edge != null) {
-            String nodeId = edge.invoke(ctx);
+            String nodeId = edge.invoke(ctx, ctx.getCurrentResult());
+
             Node node = this.nodes.get(nodeId);
-            node.invoke(ctx, prevNodeId);
+            ExecuteResult currResult = new ExecuteResult(nodeId);
+            ctx.setCurrentResult(currResult);
+            ctx.addResults(ctx.getCurrentResult());
+
+            currResult.setStatus(Status.RUNNING);
+            try {
+                Object result = node.invoke(ctx, prevNodeId);
+                currResult.setResult(result);
+                currResult.setStatus(Status.FINISHED_NORMAL);
+            }catch (Exception ex) {
+                currResult.setException(ex);
+                currResult.setStatus(Status.FINISHED_ABORT);
+            }
 
             prevNodeId = nodeId;
             // next edge
             edge = this.edges.get(nodeId);
         }
-        return ctx.getResults().getOrDefault(prevNodeId, null);
+        return ctx.getCurrentResult();
+    }
+
+    public ExecuteResult invoke(String query, Map<String, Object> params) {
+        return this.invoke(new ExecuteContext(Question.of(query), params));
+    }
+
+    public ExecuteResult invoke(String query) {
+        return this.invoke(query, new HashMap<>());
     }
 
     public void add(Edge edge) {

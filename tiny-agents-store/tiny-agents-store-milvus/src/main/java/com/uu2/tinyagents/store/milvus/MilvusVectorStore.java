@@ -5,8 +5,8 @@ import com.google.gson.JsonObject;
 import com.uu2.tinyagents.core.llm.embedding.EmbedData;
 import com.uu2.tinyagents.core.llm.embedding.EmbeddingModel;
 import com.uu2.tinyagents.core.document.Document;
-import com.uu2.tinyagents.core.rag.store.Query;
-import com.uu2.tinyagents.core.rag.store.Store;
+import com.uu2.tinyagents.core.document.store.Query;
+import com.uu2.tinyagents.core.document.store.Store;
 import com.uu2.tinyagents.core.util.ArrayUtil;
 import com.uu2.tinyagents.core.util.StringUtil;
 import io.milvus.v2.client.MilvusClientV2;
@@ -68,8 +68,8 @@ public class MilvusVectorStore implements Store {
 
 
         List<String> field = query.isOutputVector()
-                ? List.of("id", "content", "metadata")
-                : List.of("id", "content", "vector", "metadata");
+                ? List.of("id", "content", "metadata", "source", "index", "total")
+                : List.of("id", "content", "metadata", "source", "index", "total", "vector");
 
         SearchResp searchResp = this.client.search(SearchReq.builder()
                 .collectionName(config.getCollectionName())
@@ -114,6 +114,9 @@ public class MilvusVectorStore implements Store {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", document.getId());
         jsonObject.addProperty("content", document.getContent());
+        jsonObject.addProperty("source", document.getSource());
+        jsonObject.addProperty("index", document.getIndex());
+        jsonObject.addProperty("total", document.getTotal());
         jsonObject.add("vector", toJsonTree(textVector.getVector()[0]));
         jsonObject.addProperty("metadata", JSON.toJSONString(document.getMetadataMap()));
         InsertReq insertReq = InsertReq.builder()

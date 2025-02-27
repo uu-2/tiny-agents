@@ -1,8 +1,9 @@
 package com.uu2.tinyagents.core.rag.preretrieval;
 
 import com.uu2.tinyagents.core.document.Document;
-import com.uu2.tinyagents.core.rag.store.Query;
-import com.uu2.tinyagents.core.rag.store.Store;
+import com.uu2.tinyagents.core.rag.Question;
+import com.uu2.tinyagents.core.document.store.Query;
+import com.uu2.tinyagents.core.document.store.Store;
 
 import java.util.List;
 
@@ -15,12 +16,15 @@ public class QueryRoutingPrompt implements PreRetrieval {
     }
 
     @Override
-    public List<Document> invoke(List<Document> documents) {
-        if (documents.isEmpty()) {
-            return List.of();
+    public Question invoke(Question query) {
+        List<Document> prompt = promptStore.search(Query.builder()
+                .topK(1)
+                .text(query.getText())
+                .build());
+        if (!prompt.isEmpty()) {
+            query.setPromptTemplate(prompt.get(0).getContent());
         }
 
-        String text = documents.stream().map(Document::getContent).reduce((a, b) -> a + "\n" + b).get();
-        return this.promptStore.search(Query.of(text));
+        return query;
     }
 }

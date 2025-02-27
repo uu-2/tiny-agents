@@ -1,6 +1,6 @@
 package com.uu2.tinyagents.core.rag.preretrieval;
 
-import com.uu2.tinyagents.core.document.Document;
+import com.uu2.tinyagents.core.rag.Question;
 import com.uu2.tinyagents.llm.ollama.OllamaLlm;
 import com.uu2.tinyagents.llm.ollama.OllamaLlmConfig;
 import com.uu2.tinyagents.store.milvus.MilvusVectorStore;
@@ -8,7 +8,6 @@ import com.uu2.tinyagents.store.milvus.MilvusVectorStoreConfig;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
 import java.util.List;
 
 public class QueryRoutingStoreTest {
@@ -45,8 +44,7 @@ public class QueryRoutingStoreTest {
                 );
         QueryRoutingStore queryRoutingStore = new QueryRoutingStore(llm, storeDef);
 
-        List<Document> resp = queryRoutingStore.invoke(
-                Collections.singletonList(Document.of("Python 或 JavaScript：哪种编程语言更易于学习和使用？")));
-        System.out.println(resp.get(0).getContent());
+        Question resp = queryRoutingStore.invoke(Question.of("Python 或 JavaScript：哪种编程语言更易于学习和使用？"));
+        System.out.println(resp.getStores().get(0));
     }
 }

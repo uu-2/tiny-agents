@@ -3,7 +3,7 @@ package com.uu2.tinyagents.store.milvus;
 import com.uu2.tinyagents.core.llm.embedding.EmbeddingModel;
 import com.uu2.tinyagents.core.document.Document;
 import com.uu2.tinyagents.core.document.id.RandomIdGenerator;
-import com.uu2.tinyagents.core.rag.store.Query;
+import com.uu2.tinyagents.core.document.store.Query;
 import com.uu2.tinyagents.llm.ollama.OllamaLlm;
 import com.uu2.tinyagents.llm.ollama.OllamaLlmConfig;
 import io.milvus.v2.client.ConnectConfig;

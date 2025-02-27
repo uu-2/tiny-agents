@@ -12,6 +12,9 @@ public class Document extends Metadata {
     private String content;
     private String id;
     private double[] vector;
+    private String source;
+    private int index;
+    private int total;
 
     public static Document of(String content) {
         return Document.builder().content(content).build();

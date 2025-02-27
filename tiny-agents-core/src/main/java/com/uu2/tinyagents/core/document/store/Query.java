@@ -1,15 +1,17 @@
-package com.uu2.tinyagents.core.rag.store;
+package com.uu2.tinyagents.core.document.store;
 
 import com.uu2.tinyagents.core.message.Message;
+import com.uu2.tinyagents.core.util.Metadata;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 import java.util.Map;
 
 @Data
-@Builder
-public class Query {
+@SuperBuilder
+public class Query extends Metadata {
 
     private String text;
     private double[] vector;
@@ -21,6 +23,7 @@ public class Query {
     private double similarityThreshold = 0.0;
     @Builder.Default
     private boolean outputVector = false;
+
 
     public static Query of(String text) {
         return Query.builder().text(text).build();

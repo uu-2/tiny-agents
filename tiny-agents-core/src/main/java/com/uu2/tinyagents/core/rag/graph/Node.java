@@ -45,7 +45,7 @@ public class Node {
         this.id = id;
     }
 
-    public void invoke(ExecuteContext ctx, String prevNodeId) throws InterruptedException {
+    public Object invoke(ExecuteContext ctx, String prevNodeId) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
 
         List<Callable<Object>> forkJoinTasks = new ArrayList<>(tasks.size());
@@ -60,11 +60,12 @@ public class Node {
         for (Future<Object> future : futures) {
             try {
                 results.add(future.get());
-            } catch (ExecutionException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-        ctx.addResults(this.getId(), results);
+
+        return results;
     }
 
     public Object encode() {

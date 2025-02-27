@@ -5,8 +5,8 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import com.uu2.tinyagents.core.llm.Llm;
 import com.uu2.tinyagents.core.llm.response.AiMessageResponse;
 import com.uu2.tinyagents.core.prompt.TextPrompt;
-import com.uu2.tinyagents.core.document.Document;
-import com.uu2.tinyagents.core.rag.store.Store;
+import com.uu2.tinyagents.core.rag.Question;
+import com.uu2.tinyagents.core.document.store.Store;
 import lombok.Builder;
 import lombok.Data;
 
@@ -27,7 +27,7 @@ public class QueryRoutingStore implements PreRetrieval {
     }
 
     @Override
-    public List<Document> invoke(List<Document> documents) {
+    public Question invoke(Question query) {
 
         TextPrompt prompt = TextPrompt.of("""
                 你是一个AI语言模型助手。你的任务是根据用户的原始问题，从给定的 STORE_JSON 中选择正确的 STORE，并返回对应 name。
@@ -47,7 +47,7 @@ public class QueryRoutingStore implements PreRetrieval {
 
         AiMessageResponse resp = prompt.invoke(llm,
                 Map.of("store_List", JSON.toJSONString(storeDefs),
-                        "question", documents));
+                        "question", query.getText()));
         List<String> storeNames = JSON.parseObject(resp.getMessage().getContent().toString(), ArrayList.class);
 
         Map<String, StoreDef> storeDefMap = storeDefs.stream().collect(
@@ -56,7 +56,9 @@ public class QueryRoutingStore implements PreRetrieval {
         Map<String, Store> storeMap = storeNames.stream().collect(
                 Collectors.toMap(x -> x, x -> storeDefMap.get(x).getStore()));
 
-        return documents;
+        query.setStores(storeMap.values().stream().toList());
+
+        return query;
     }
 
     @Data

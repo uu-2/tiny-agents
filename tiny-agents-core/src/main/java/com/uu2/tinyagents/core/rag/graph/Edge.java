@@ -18,8 +18,8 @@ public class Edge {
     private Condition cond;
     private Map<String, String> toNodes;
 
-    public String invoke(ExecuteContext ctx) {
-        String v = cond.cond();
+    public String invoke(ExecuteContext ctx, ExecuteResult fromNodeResult) {
+        String v = cond.cond(ctx, fromNodeResult);
         return toNodes.getOrDefault(v, null);
     }
 

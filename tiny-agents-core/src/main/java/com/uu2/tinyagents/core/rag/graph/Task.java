@@ -4,7 +4,10 @@ public interface Task {
 
     Object invoke(ExecuteContext ctx);
 
-    Object encode();
+    default Object encode() {
+        return null;
+    }
 
-    void decode(Object content);
+    default void decode(Object content) {
+    }
 }

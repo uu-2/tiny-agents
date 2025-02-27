@@ -2,6 +2,7 @@ package com.uu2.tinyagents.core.rag.preretrieval;
 
 import com.uu2.tinyagents.core.llm.client.HttpClient;
 import com.uu2.tinyagents.core.document.Document;
+import com.uu2.tinyagents.core.rag.Question;
 import com.uu2.tinyagents.llm.ollama.OllamaLlm;
 import com.uu2.tinyagents.llm.ollama.OllamaLlmConfig;
 import okhttp3.OkHttpClient;
@@ -41,9 +42,9 @@ public class QueryTranslationTest {
     public void invoke() {
 
         PreRetrieval queryTranslation = new QueryTranslation(llm);
-        List<Document> resp = queryTranslation.invoke(Collections.singletonList(Document.of("Python 和 Java 谁更好？")));
+        Question resp = queryTranslation.invoke(Question.of("Python 和 Java 谁更好？"));
         System.out.println(resp);
-        assertEquals(5, resp.size());
+        assertEquals(5, resp.getQueryTranslation().size());
     }
 
 }

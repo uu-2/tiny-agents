@@ -23,6 +23,10 @@ public class FunctionPrompt extends AttachmentPrompt {
         this(content, new DefaultChatMemory());
     }
 
+    public FunctionPrompt(ChatMemory memory) {
+        super(memory);
+    }
+
     public FunctionPrompt(String content, ChatMemory memory) {
         super(memory);
         this.addMessage(HumanMessage.of(content));
@@ -38,7 +42,7 @@ public class FunctionPrompt extends AttachmentPrompt {
                             "当需要使用多个工具时，需要返回每个工具得详细调用信息。如果一个参数需要使用到其他工具得返回结果时，请在参数值中使用 $ref(tool) 格式。\n"
             );
         }
-        return SystemMessage.of(String.valueOf(msg.getContent()) + "\n" +
+        return SystemMessage.of(msg.getContent() + "\n" +
                 "你应该优先使用工具解决问题, 并且仅仅使用工具解决问题, 你不应该使用工具以外的方法解决问题.\n" +
                 "当需要使用多个工具时，需要返回每个工具得详细调用信息。如果一个参数需要使用到其他工具得返回结果时，请在参数值中使用 $ref(tool) 格式。\n");
     }
